@@ -1,33 +1,21 @@
 package config
 
 import (
-	"fmt"
-	"time"
+	"log"
 
-	mysql "go.elastic.co/apm/module/apmgormv2/v2/driver/mysql"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/schema"
 )
 
-// PostgresDB : Variable to hold the postgresql db connection
+// // MariaDB : Variable to hold the MariaDB db connection
 var MariaDB *gorm.DB
 
-// InitializeDB : Initializes the Database connections
 func InitializeDB() {
-
-	db, err := gorm.Open(mysql.Open(":8000"+fmt.Sprintf("?%s", "&parseTime=True")), &gorm.Config{
-		SkipDefaultTransaction: false,
-		PrepareStmt:            true,
-		NamingStrategy:         schema.NamingStrategy{SingularTable: true, TablePrefix: "movie" + "."},
-		// Logger: Logger,
-	})
+	// database connection info
+	dsn := "G.Lakshmi Maneesh:pass@tcp(127.0.0.1:3306)/movie?charset=utf8mb4&parseTime=True&loc=Local"
+	var err error
+	MariaDB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic(err)
+		log.Fatalf("Error connecting to database: %v", err)
 	}
-
-	sqlDB, _ := db.DB()
-	sqlDB.SetMaxIdleConns(25)
-	sqlDB.SetConnMaxLifetime(time.Minute * 5)
-
-	MariaDB = db
 }
