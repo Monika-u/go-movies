@@ -28,27 +28,14 @@ func GlobalMovieSearch(c *gin.Context) {
 		return
 	}
 
-	// movie-search output
-	var output []models.Movie
-	var err error
-
-	if input.SearchText == "" && input.Language == "" {
-		// retrieve all movies
-		output, err = db.SearchAllMovies(c, input)
-	} else if input.SearchText != "" {
-		// Search by movie name
-		output, err = db.SearchByMovieName(c, input)
-	} else {
-		// Search by language
-		output, err = db.SearchByLanguage(c, input)
-	}
+	// Perform the global movie search
+	output, err := db.GlobalMovieSearch(c, input)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"msg": "Error querying database",
 		})
 		return
 	}
-
 	if len(output) == 0 {
 		c.JSON(http.StatusOK, gin.H{
 			"msg": "Oops! No data with given input",

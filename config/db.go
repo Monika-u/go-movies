@@ -12,7 +12,7 @@ var MariaDB *gorm.DB
 
 func InitializeDB() {
 	// database connection info
-	dsn := "username:password@tcp(127.0.0.1:3306)/movie?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "G.Lakshmi Maneesh:pass@tcp(127.0.0.1:3306)/movie?charset=utf8mb4&parseTime=True&loc=Local"
 	var err error
 	MariaDB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
