@@ -6,7 +6,8 @@ import (
 
 type Search struct {
 	SearchText string `json:"searchText"`
-	Language   string `gorm:"column:language; varchar(100)" json:"language"`
+	Language   string ` json:"language"`
+	Rating     int    ` json:"rating"`
 	Offset     int    `json:"offset"`
 	Limit      int    `json:"limit"`
 }
